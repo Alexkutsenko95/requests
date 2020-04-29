@@ -1,0 +1,15 @@
+
+.form-delay{
+    max-width: 400px;
+}
+
+.form-delay:first-child{
+    padding-bottom: 8px;
+ }
+
+
+.numeric{
+    padding: 10px;
+    min-width: 64px;
+    margin-top: 8px;
+}
