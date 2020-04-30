@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
+
+import { v4 as uuidv4 } from 'uuid';
 import NumericInput from 'react-numeric-input';
 
 import  Form, {
     ErrorMessage,
     Field,
     FormFooter,
-    HelperMessage,
-    ValidMessage
 } from '@atlaskit/form';
 import TextField from '@atlaskit/textfield';
 import Button from '@atlaskit/button';
@@ -20,11 +20,12 @@ interface IRequest {
 
 interface IList {
     list: Array<IRequest> ;
+    addRequest: any
 }
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const ListDisplay = ({ list }: IList) => {
+export const ListDisplay = ({ list,addRequest }: IList) => {
     const getUser = async (value: string) => {
         await sleep(300);
         if (['jsmith', 'mchan'].includes(value)) {
@@ -43,19 +44,18 @@ export const ListDisplay = ({ list }: IList) => {
         return getUser(value);
     };
 
-    const handleSubmit = (data: { password: string }) => {
-        console.log(data);
+    const handleSubmit = (data: { name: string, delay: number }) => {
+        addRequest({...data,id:uuidv4()})
     };
-
-
+    console.log('v:listlistlist:',list);
     return (
         <div className="list">
                 <Form onSubmit={handleSubmit}>
                     {({ formProps }) => (
                         <form className="form-delay" {...formProps}>
                             <Field
-                                name="username"
-                                label="Username"
+                                name="text"
+                                label="text"
                                 defaultValue=""
                                 isRequired
                                 validate={validate}
@@ -76,14 +76,37 @@ export const ListDisplay = ({ list }: IList) => {
                                     </Fragment>
                                 )}
                             </Field>
-                            <input className="numeric" type="number" min={1} max={10}/>
+                            <Field
+                                name="delay"
+                                label="Delay"
+                                defaultValue="1"
+                                isRequired
+                            >
+                                {({ fieldProps, error, valid }) => (
+                                    <Fragment>
+                                        <input {...fieldProps} className="numeric" type="number" defaultValue={0} min={1} max={10}/>
+                                        {error === 'TOO_SHORT' && (
+                                            <ErrorMessage>
+                                                Invalid username, needs to be more than 4 characters
+                                            </ErrorMessage>
+                                        )}
+                                        {error === 'IN_USE' && (
+                                            <ErrorMessage>
+                                                Username already taken, try another one
+                                            </ErrorMessage>
+                                        )}
+                                    </Fragment>
+                                )}
+                            </Field>
+
+
                             <FormFooter>
                                 <Button type="submit">add</Button>
                             </FormFooter>
                         </form>
                     )}
                 </Form>
-            {list.map(({text,delay}) => <div>{text} - {delay}</div>)}
+            {list.length > 0 && list.map(({text,delay}) => <div>{text} - {delay}  - <span onClick={() => console.log('id::>>',delay)}>X</span></div>)}
         </div>
     );
 };

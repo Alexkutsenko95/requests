@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, memo } from 'react';
+import { IRequest } from '../common'
 import '../App.css';
 
-interface IRequest {
-    text: string;
-    delay: number;
-}
 
 interface IList {
-    list: Array<IRequest> ;
+    list: any ;
     displayedRequest: any;
     setDisplayedRequest: (request: IRequest) => void
     setRun: (active: boolean) => void
     run: boolean
 }
 
-export const Requests = ({ list, displayedRequest,setDisplayedRequest,setRun, run}: IList) => {
-    const [timeLeft, setTimeLeft] = useState(displayedRequest.delay);
+const RequestsComponent = ({ list, displayedRequest,setDisplayedRequest,setRun, run}: IList) => {
+    const [timeLeft, setTimeLeft] = useState(displayedRequest ? displayedRequest.delay : undefined);
 
     const stop = () => {
         setDisplayedRequest(list[0]);
@@ -25,7 +21,7 @@ export const Requests = ({ list, displayedRequest,setDisplayedRequest,setRun, ru
 
     useEffect(() => {
         if(timeLeft === 0){
-            const newRequest = list[list.findIndex(item => item.text === displayedRequest.text) + 1];
+            const newRequest = list[list.findIndex((item: any) => item.id === displayedRequest.id) + 1];
 
             newRequest ? setDisplayedRequest(newRequest) : stop() ;
         }
@@ -39,21 +35,29 @@ export const Requests = ({ list, displayedRequest,setDisplayedRequest,setRun, ru
         return () => clearInterval(intervalId);
     }, [timeLeft]);
 
-    useEffect(() => {
-        setTimeLeft(displayedRequest.delay)
-    }, [displayedRequest]);
 
-    if(!run){
+    useEffect(() => {
+
+        if(displayedRequest){
+            setTimeLeft(displayedRequest.delay)
+        }
+
+    }, [list.length,displayedRequest]);
+
+    if(!run || !displayedRequest ){
         return <div className="List-Wrapper"/>;
     }
 
+
     return (
         <div className="List-Wrapper">
+         <div className="loader"/>
          <div className="list">
-            {displayedRequest.delay} - {displayedRequest.text}
+                 {displayedRequest ? `${displayedRequest.delay} - ${displayedRequest.text}`: '' }
             <h1>{timeLeft}</h1>
             <button onClick={() => stop()}>Stop</button>
          </div>
         </div>
     );
 };
+export const Requests= memo(RequestsComponent)

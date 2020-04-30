@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import React,{ memo } from 'react';
+
 import { ListDisplay } from './ListDisplay';
 
-import './ListDisplay.css';
+import './ListDisplay/ListDisplay.css';
 
 interface IRequest {
     text: string;
@@ -11,17 +12,24 @@ interface IRequest {
 interface IList {
     list: Array<IRequest> ;
     setRun: (active : boolean) => void ;
+    setDisplayedRequest: any ;
+    addRequest: any ;
 }
 
+ const RequestsPanelComponent = ({ list,setRun,setDisplayedRequest,addRequest }: IList) => {
 
-export const RequestsPanel = ({ list,setRun }: IList) => {
-
+    const handlerRun = () => {
+        setDisplayedRequest(list[0]);
+        setRun(true)
+    };
     return (
         <div className="List-Wrapper">
-            <ListDisplay list={list}/>
-            <button onClick={() => setRun(true)}>
+            <ListDisplay addRequest={addRequest} list={list}/>
+            <button onClick={handlerRun}>
                 Run
             </button>
         </div>
     );
 };
+
+export const RequestsPanel = memo(RequestsPanelComponent);
