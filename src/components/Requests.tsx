@@ -52,7 +52,7 @@ const RequestsComponent = ({ list, displayedRequest,setDisplayedRequest,setRun, 
         <div className="List-Wrapper">
          <div className="loader"/>
          <div className="list text-align">
-                 {displayedRequest ? `${displayedRequest.delay} - ${displayedRequest.text}`: '' }
+                 {displayedRequest ? `text: ${displayedRequest.text}`: '' }
             <h1>{timeLeft}</h1>
          </div>
 
