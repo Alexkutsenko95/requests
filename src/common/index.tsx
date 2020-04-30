@@ -14,11 +14,10 @@ export interface BaseAction {
     payload?: any;
 }
 
-
 export interface IRequest {
     text: string;
     delay: number;
-    id: number;
+    id: string;
 }
 
 export interface IList {

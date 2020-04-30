@@ -1,15 +1,49 @@
 
 .form-delay{
-    max-width: 400px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .form-delay:first-child{
     padding-bottom: 8px;
  }
 
-
 .numeric{
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
     padding: 10px;
     min-width: 64px;
+    width: 100%;
+    margin-left:  8px;
+}
+
+.addButton{
+    margin-left: 8px;
+    align-self: flex-end;
+}
+.request{
     margin-top: 8px;
+    padding:  4px 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item{
+    margin-top: 8px;
+    padding:  4px 8px;
+
+
+}
+.button{
+    width: 64px !important;
+    align-self: flex-end;
+    margin-top: 16px;
+}
+.trash-icon {
+    height: 16px;
+    width: 16px;
+    position: relative;
+    top: 2px;
+    cursor: pointer;
 }

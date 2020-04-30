@@ -26,12 +26,31 @@
   flex-direction: column;
   font-size: calc(10px + 2vmin);
 }
+.button{
+  width: 64px;
+  align-self: center;
+  margin-top: 16px;
+}
+
+.button-wrapper{
+  display: flex;
+  justify-content: flex-end;
+}
+.mr{
+  margin-right: 12px !important;
+}
 
 .List-Wrapper{
   min-width: 50%;
   flex-direction: column;
   display: flex;
   flex: 1 1 auto;
+  min-height: 220px;
+}
+
+.mh{
+  min-height: 600px;
+
 }
 .List-Wrapper:last-child{
   margin-left: 10px;
@@ -44,10 +63,15 @@
   justify-content: flex-start;
 }
 
+.text-align{
+  text-align: center;
+  position:relative;
+  top: 40px;
+}
 .loader {
   color: black;
   font-size: 12px;
-  margin: 60px auto;
+  margin: 54px auto;
   width: 1em;
   height: 1em;
   border-radius: 50%;

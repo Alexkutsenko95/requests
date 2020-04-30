@@ -2,8 +2,7 @@ import React, { useState, useEffect, memo } from 'react';
 import { IRequest } from '../common'
 import '../App.css';
 
-
-interface IList {
+interface IRequestsComponent {
     list: any ;
     displayedRequest: any;
     setDisplayedRequest: (request: IRequest) => void
@@ -11,7 +10,7 @@ interface IList {
     run: boolean
 }
 
-const RequestsComponent = ({ list, displayedRequest,setDisplayedRequest,setRun, run}: IList) => {
+const RequestsComponent = ({ list, displayedRequest,setDisplayedRequest,setRun, run}: IRequestsComponent) => {
     const [timeLeft, setTimeLeft] = useState(displayedRequest ? displayedRequest.delay : undefined);
 
     const stop = () => {
@@ -42,7 +41,7 @@ const RequestsComponent = ({ list, displayedRequest,setDisplayedRequest,setRun, 
             setTimeLeft(displayedRequest.delay)
         }
 
-    }, [list.length,displayedRequest]);
+    }, [list.length,displayedRequest,run]);
 
     if(!run || !displayedRequest ){
         return <div className="List-Wrapper"/>;
@@ -52,11 +51,11 @@ const RequestsComponent = ({ list, displayedRequest,setDisplayedRequest,setRun, 
     return (
         <div className="List-Wrapper">
          <div className="loader"/>
-         <div className="list">
+         <div className="list text-align">
                  {displayedRequest ? `${displayedRequest.delay} - ${displayedRequest.text}`: '' }
             <h1>{timeLeft}</h1>
-            <button onClick={() => stop()}>Stop</button>
          </div>
+
         </div>
     );
 };

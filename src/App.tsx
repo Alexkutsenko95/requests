@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import Requests from './Container/index';
 import './App.css';
 
 
 
-const App = (props: any) => {
+const App: FunctionComponent = () => {
 
     return (
         <div className="App">
@@ -15,5 +15,6 @@ const App = (props: any) => {
         <Requests/>
         </div>
     );
-}
+};
+
 export default App;
